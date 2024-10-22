@@ -46,7 +46,7 @@ fun SplashScreen(navController: NavHostController) {
         Image(
             painter = painterResource(id = R.drawable.fsclogo),
             contentDescription = "",
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            //modifier = Modifier.align(Alignment.CenterHorizontally)
         )
     }
 }
