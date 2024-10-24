@@ -49,7 +49,7 @@ fun GpaAppScreen() {
                 .padding(bottom = 16.dp)
                 .fillMaxWidth(),  // Ensure text field takes up full width
             label = { Text("Course 1 Grade") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)  // Use number keypad
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number) 
         )
 
 
