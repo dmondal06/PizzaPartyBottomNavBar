@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
-// ToDo 4: Match the UI as in drawable gpa_design.png. Use the following hints:
+// ToDo 4: Done Match the UI as in drawable gpa_design.png. Use the following hints:
 // - The background color should be Color.Cyan
 // - Fix padding, alignment, and keypad type
 
@@ -35,28 +35,44 @@ fun GpaAppScreen() {
 
     Column(
         modifier = Modifier
-        ,verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+            .background(Color.Cyan)
+            .padding(16.dp)
+            .fillMaxSize()
+        ,verticalArrangement = Arrangement.Center
+        ,horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        TextField(
+        OutlinedTextField(
             value = grade1,
-            onValueChange = { grade1 = it },Modifier.padding(16.dp),
-            label = { Text("Course 1 Grade")}
+            onValueChange = { grade1 = it },
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth(),  // Ensure text field takes up full width
+            label = { Text("Course 1 Grade") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)  // Use number keypad
         )
 
 
-        TextField(
+        OutlinedTextField(
             value = grade2,
             onValueChange = { grade2 = it },
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth(),
             label = { Text("Course 2 Grade") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
 
 
-        TextField(
+        OutlinedTextField(
             value = grade3,
             onValueChange = { grade3 = it },
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth(),
             label = { Text("Course 3 Grade") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
 
@@ -86,7 +102,11 @@ fun GpaAppScreen() {
                 backColor = Color.White
                 btnLabel = "Compute GPA"
             }
-        }, modifier = Modifier.padding(top = 56.dp)) {
+        }, modifier = Modifier
+            .padding(top = 16.dp)
+            .fillMaxWidth()
+        )
+        {
             Text(btnLabel)
         }
 
