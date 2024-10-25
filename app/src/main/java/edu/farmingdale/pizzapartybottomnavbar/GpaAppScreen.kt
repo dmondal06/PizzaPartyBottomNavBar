@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 // - The background color should be Color.Cyan
 // - Fix padding, alignment, and keypad type
 
-// ToDo 5:  Add the GpaAppScreen composable button that clears the input fields when clicked
+// ToDo 5: Done  Add the GpaAppScreen composable button that clears the input fields when clicked
 
 
 @Composable
@@ -49,7 +49,7 @@ fun GpaAppScreen() {
                 .padding(bottom = 16.dp)
                 .fillMaxWidth(),  // Ensure text field takes up full width
             label = { Text("Course 1 Grade") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number) 
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
 
@@ -76,52 +76,57 @@ fun GpaAppScreen() {
         )
 
 
-        Button(onClick = {
-            if (btnLabel == "Compute GPA") {
-
-                val gpaVal = calGPA(grade1, grade2, grade3)
-                if (gpaVal != null) {
-                    gpa = gpaVal.toString()
-
-                    // Change background color based on GPA
-                    backColor = when {
-                        gpaVal < 60 -> Color.Red
-                        gpaVal in 60.0..79.0 -> Color.Yellow
-                        else -> Color.Green
+        Button(
+            onClick = {
+                if (btnLabel == "Compute GPA") {
+                    // Compute GPA
+                    val gpaVal = calGPA(grade1, grade2, grade3)
+                    if (gpaVal != null) {
+                        gpa = gpaVal.toString()
+                        backColor = when {
+                            gpaVal < 60 -> Color.Red
+                            gpaVal in 60.0..79.0 -> Color.Yellow
+                            else -> Color.Green
+                        }
+                        btnLabel = "Clear"  // Change the button label to "Clear" after computing GPA
+                    } else {
+                        gpa = "Invalid input"
                     }
-                    btnLabel = "Clear"
                 } else {
-                    gpa = "Invalid input"
+                    // Clear the input fields and reset the GPA
+                    grade1 = ""
+                    grade2 = ""
+                    grade3 = ""
+                    gpa = ""
+                    backColor = Color.White
+                    btnLabel = "Compute GPA"  // Change the button label back to "Compute GPA"
                 }
-            } else {
-                // Reset all value to none
-                grade1 = ""
-                grade2 = ""
-                grade3 = ""
-                gpa = ""
-                backColor = Color.White
-                btnLabel = "Compute GPA"
-            }
-        }, modifier = Modifier
-            .padding(top = 16.dp)
-            .fillMaxWidth()
-        )
-        {
+            },
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .fillMaxWidth()  // Ensure the button takes up full width
+        ) {
             Text(btnLabel)
         }
 
-
+        // Display GPA result if it's not empty
         if (gpa.isNotEmpty()) {
-            Text(text = "GPA: $gpa")
+            Text(
+                text = "GPA: $gpa",
+                modifier = Modifier.padding(top = 16.dp),
+                style = MaterialTheme.typography.headlineSmall  // Updated to Material3's equivalent of h5
+            )
         }
-
-
     }
 }
 
 
-fun calGPA(grade1: String, grade2: String, grade3: String): Double {
-    val grades = listOf(grade1.toDouble(), grade2.toDouble(), grade3.toDouble())
-    return grades.average()
+fun calGPA(grade1: String, grade2: String, grade3: String): Double? {
+    return try {
+        val grades = listOf(grade1.toDouble(), grade2.toDouble(), grade3.toDouble())
+        return grades.average()
+    } catch (e: NumberFormatException) {
+        null
+    }
 }
 
